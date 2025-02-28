@@ -25,6 +25,9 @@ public class Main {
 
         Refrigerator r = new Refrigerator(1, "Hitachi Cool", 5, 4590, "Two Way", "Black", 190);
         System.out.println(r.toString());
+
+        UserInfo u = new UserInfo();
+        u.promptName();
     }
 
     private static void initConfig() {
