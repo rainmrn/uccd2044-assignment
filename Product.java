@@ -4,8 +4,8 @@ public abstract class Product {
     private int quantity, productId;
     private boolean isActive = true;
 
-    public Product() {}
-    public Product(int productId, String name, int quantity, double price) {
+    protected Product() {}
+    protected Product(int productId, String name, int quantity, double price) {
         this.productId = productId;
         this.name = name;
         setQuantity(quantity);

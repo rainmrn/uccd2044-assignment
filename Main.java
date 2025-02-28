@@ -21,8 +21,10 @@ public class Main {
 
         System.out.println("Welcome to the stock management system.");
         System.out.println("Date: " + currentDate.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM,FormatStyle.MEDIUM)));
-        System.out.println("Current user: " + config.getString("name"));
+        System.out.println("Current user: " + config.getString("name") + "\n");
 
+        Refrigerator r = new Refrigerator(1, "Hitachi Cool", 5, 4590, "Two Way", "Black", 190);
+        System.out.println(r.toString());
     }
 
     private static void initConfig() {
