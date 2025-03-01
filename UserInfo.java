@@ -7,15 +7,37 @@ public class UserInfo {
 
     public void promptName() {
         Scanner input = new Scanner(System.in);
+        System.out.println("Hey! Welcome aboard.");
         System.out.print("Enter your full name (first + last): ");
         name = input.nextLine();
         
         if (name.contains(" ")) {
             userId = name.substring(0, 1) + name.substring(name.lastIndexOf(" ") + 1);
-            System.out.println("user id: " + userId);
         } else {
             userId = "guest";
         }
         input.close();
+    }
+
+    public String getName() {
+        if (name == null) {
+            promptName();
+        }
+        return name;
+    }
+
+    public String getUserId() {
+        if (userId == null) {
+            promptName();
+        }
+        return userId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }
