@@ -11,9 +11,6 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 public class Main {
-    final private static String CONFIG_PATH = "config.json";
-    private static JSONObject config;
-    private static File configFile = new File(CONFIG_PATH);
     private static UserInfo user;
     private static int maxNumOfProduct;
 
@@ -23,66 +20,51 @@ public class Main {
 
         System.out.println("\nWelcome to the stock management system.");
         System.out.println("Date: " + currentDate.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM,FormatStyle.MEDIUM)));
-        System.out.println("Current user: " + config.getString("name") + "\n");
+        System.out.println("Current user: " + ConfigUtil.config.getString("name") + "\n");
 
 
         System.out.println("Max: " + maxNumOfProduct);
+        resetApp();
         ScannerUtil.scanner.close();
     }
 
     private static void init() {
-        if (configFile.exists()) {
-            readConfig();
-        } else {
+        ConfigUtil.initConfigFile();
+
+        if (ConfigUtil.config.isEmpty()) {
             user = new UserInfo();
             user.promptName();
-            
-            config = new JSONObject();
-            config.put("name", user.getName());
-            config.put("userId", user.getUserId());
-
             maxNumOfProduct = getMaxNumOfProduct();
-            config.put("maxNumOfProduct", maxNumOfProduct);
 
-            writeConfig();
+            ConfigUtil.config.put("name", user.getName());
+            ConfigUtil.config.put("userId", user.getUserId());
+            ConfigUtil.config.put("maxNumOfProduct", maxNumOfProduct);
+            ConfigUtil.writeConfig();
         }
-    }
-
-    private static void writeConfig() {
-        try (FileWriter configWriter = new FileWriter(configFile)) {
-            configWriter.write(config.toString(4));
-        } catch (IOException error) {
-            System.err.println(error);
+        else {
+            readConfig();
         }
     }
 
     // Initialise user from config file
-    private static void readConfig() {
-        try (FileReader configReader = new FileReader(configFile)) {
-            config = new JSONObject(new JSONTokener(configReader));
-        } catch (IOException error) {
-            System.err.println(error);
-        }
-        
+    private static void readConfig() {        
         user = new UserInfo();
-        user.setName(config.getString("name"));
-        user.setUserId(config.getString("userId"));
-        maxNumOfProduct = config.getInt("maxNumOfProduct");
+        user.setName(ConfigUtil.config.getString("name"));
+        user.setUserId(ConfigUtil.config.getString("userId"));
+        maxNumOfProduct = ConfigUtil.config.getInt("maxNumOfProduct");
     }
 
     private static void resetApp() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Are you sure you want to reset the app? All changes made will be lost.");
         System.out.print("Y/N: ");
-        String input = scanner.next();
-        if (input == "Y" || input == "y") {
-            config.clear();
-            writeConfig();
+        String input = ScannerUtil.scanner.next();
+        if (input.equalsIgnoreCase("y")) {
+            ConfigUtil.config.clear();
+            ConfigUtil.writeConfig();
             System.out.println("App reset. Restart to see changes.");
         } else {
             System.out.println("No changes were made.");
         }
-        scanner.close();
     }
 
     private static int getMaxNumOfProduct() {
