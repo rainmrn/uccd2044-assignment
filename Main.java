@@ -27,6 +27,7 @@ public class Main {
 
 
         System.out.println("Max: " + maxNumOfProduct);
+        ScannerUtil.scanner.close();
     }
 
     private static void init() {
@@ -85,11 +86,9 @@ public class Main {
     }
 
     private static int getMaxNumOfProduct() {
-        Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.print("Enter the maximum number of products you wish to store in this application: ");
-            int userInput = scanner.nextInt();
-            scanner.close();
+            int userInput = ScannerUtil.scanner.nextInt();
             if (userInput >= 0) {
                 return userInput;
             }

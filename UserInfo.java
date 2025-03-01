@@ -1,4 +1,3 @@
-import java.util.Scanner;
 
 // todo: ask lecturer
 public class UserInfo {
@@ -6,17 +5,15 @@ public class UserInfo {
     private String userId;
 
     public void promptName() {
-        Scanner input = new Scanner(System.in);
         System.out.println("Hey! Welcome aboard.");
         System.out.print("Enter your full name (first + last): ");
-        name = input.nextLine();
+        name = ScannerUtil.scanner.nextLine();
         
         if (name.contains(" ")) {
             userId = name.substring(0, 1) + name.substring(name.lastIndexOf(" ") + 1);
         } else {
             userId = "guest";
         }
-        input.close();
     }
 
     public String getName() {
