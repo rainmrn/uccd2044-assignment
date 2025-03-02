@@ -37,12 +37,17 @@ public class Main {
                     System.out.print("\nSelect a product to discontinue: ");
                     discontinueProduct(ScannerUtil.scanner.nextInt() - 1);
                     break;
+                case 5:
+                    addProductPrompt();
+                    break;
+                case 6:
+                    resetApp();
+                    break;
                 default:
                     break;
             }
-        } while (selection != 0);
-        // resetApp();
-        ConfigUtil.writeProduct();
+        } while (selection != 0 && selection != 6);
+        ProductUtil.writeProduct();
         ScannerUtil.scanner.close();
     }
 
@@ -57,7 +62,7 @@ public class Main {
      */
     private static void init() {
         ConfigUtil.initConfigFile();
-        ConfigUtil.initProductFile();
+        ProductUtil.initProductFile();
 
         if (ConfigUtil.config.isEmpty()) {
             user = new UserInfo();
@@ -85,7 +90,7 @@ public class Main {
 
     private static void readProduct() {
         productArray = new Product[maxNumOfProduct];
-        JSONObject products = ConfigUtil.product;
+        JSONObject products = ProductUtil.product;
 
         int index = 0;
         for (String key : products.keySet()) {
@@ -103,7 +108,7 @@ public class Main {
                         product.getDouble("price"),
                         product.getString("doorDesign"),
                         product.getString("color"),
-                        product.getInt("capacity"),
+                        product.getDouble("capacity"),
                         product.getBoolean("isActive"));
             } else if (type.equals("tv")) {
                 productArray[index++] = new TV(
@@ -113,7 +118,7 @@ public class Main {
                         product.getDouble("price"),
                         product.getString("screenType"),
                         product.getString("resolution"),
-                        product.getInt("displaySize"),
+                        product.getDouble("displaySize"),
                         product.getBoolean("isActive"));
             }
         }
@@ -122,12 +127,13 @@ public class Main {
     }
 
     private static void resetApp() {
-        System.out.println("Are you sure you want to reset the app? All changes made will be lost.");
+        System.out.println("\nAre you sure you want to reset the app? All changes made will be lost.");
         System.out.print("Y/N: ");
         String input = ScannerUtil.scanner.next();
         if (input.equalsIgnoreCase("y")) {
             ConfigUtil.config.clear();
             ConfigUtil.writeConfig();
+            ProductUtil.resetProduct();
             System.out.println("App reset. Restart to see changes.");
         } else {
             System.out.println("No changes were made.");
@@ -170,10 +176,12 @@ public class Main {
                             "2. Add stock\n" +
                             "3. Deduct stock\n" +
                             "4. Discontinue product\n" +
+                            "5. Add product\n" +
+                            "6. Reset app\n" +
                             "0. Exit\n" +
                             "Please enter a menu option: ");
             int selection = ScannerUtil.scanner.nextInt();
-            if (selection >= 0 && selection <= 4) {
+            if (selection >= 0 && selection <= 6) {
                 return selection;
             }
             ConsoleUtil.clearConsole();
@@ -216,8 +224,8 @@ public class Main {
             System.out.print("Amount to add: ");
             int amountToAdd = ScannerUtil.scanner.nextInt();
             if (amountToAdd >= 0) {
-                productArray[index].addQuantity(amountToAdd);
-                JSONObject productInConfig = ConfigUtil.product
+                productArray[index].addStock(amountToAdd);
+                JSONObject productInConfig = ProductUtil.product
                         .getJSONObject(Integer.toString(productArray[index].getProductId()));
                 productInConfig.put("stock", productInConfig.getInt("stock") + amountToAdd);
                 break;
@@ -234,9 +242,9 @@ public class Main {
         while (true) {
             System.out.print("Amount to deduct: ");
             int amountToDeduct = ScannerUtil.scanner.nextInt();
-            if (amountToDeduct >= 0 && productArray[index].getQuantity() >= amountToDeduct) {
-                productArray[index].deductQuantity(amountToDeduct);
-                JSONObject productInConfig = ConfigUtil.product
+            if (amountToDeduct >= 0 && productArray[index].getStock() >= amountToDeduct) {
+                productArray[index].deductStock(amountToDeduct);
+                JSONObject productInConfig = ProductUtil.product
                         .getJSONObject(Integer.toString(productArray[index].getProductId()));
                 productInConfig.put("stock", productInConfig.getInt("stock") - amountToDeduct);
                 break;
@@ -250,14 +258,122 @@ public class Main {
         selectedProduct.setIsActive(false);
 
         // Make changes to product file
-        JSONObject productInConfig = ConfigUtil.product.getJSONObject(Integer.toString(selectedProduct.getProductId()));
+        JSONObject productInConfig = ProductUtil.product
+                .getJSONObject(Integer.toString(selectedProduct.getProductId()));
         productInConfig.put("isActive", false);
     }
 
     private static void addProductPrompt() {
-        System.out.println("1. Refrigerator\n" +
-                "2. TV");
-        System.out.print("\nSelect product type to add: ");
-        ScannerUtil.scanner.nextInt();
+        if (numOfProduct == maxNumOfProduct) {
+            System.out.println("Reached maximum number of products.");
+            return;
+        }
+        while (true) {
+            ConsoleUtil.clearConsole();
+            System.out.println("1. Refrigerator\n" +
+                    "2. TV");
+            System.out.print("\nSelect product type to add: ");
+            int input = ScannerUtil.scanner.nextInt();
+            ScannerUtil.scanner.nextLine();
+            if (input >= 1 && input <= 2) {
+                switch (input) {
+                    case 1:
+                        addProductRefrigerator();
+                        break;
+                    case 2:
+                        addProductTV();
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            }
+        }
+    }
+
+    private static void addProductRefrigerator() {
+        ConsoleUtil.clearConsole();
+        String name, doorDesign, color;
+        int stock, productId;
+        double capacity, price;
+
+        System.out.println("Adding product of type: Refrigerator\n");
+        System.out.print("Product ID: ");
+        productId = ScannerUtil.scanner.nextInt();
+        if (productExists(productId)) {
+            System.out.println("Product with the same ID already exists.");
+            ConsoleUtil.pauseConsole();
+            return;
+        }
+
+        System.out.print("Name: ");
+        name = ScannerUtil.scanner.nextLine();
+
+        System.out.print("Door design: ");
+        doorDesign = ScannerUtil.scanner.nextLine();
+
+        System.out.print("Color: ");
+        color = ScannerUtil.scanner.nextLine();
+
+        System.out.print("Capacity (litres): ");
+        capacity = ScannerUtil.scanner.nextDouble();
+
+        System.out.print("Stock quantity: ");
+        stock = ScannerUtil.scanner.nextInt();
+
+        System.out.print("Price (RM): ");
+        price = ScannerUtil.scanner.nextDouble();
+
+        Product product = new Refrigerator(productId, name, stock, price, doorDesign, color, capacity, true);
+        productArray[++numOfProduct] = product;
+        ProductUtil.addProduct(product);
+    }
+
+    private static void addProductTV() {
+        ConsoleUtil.clearConsole();
+        String name, screenType, resolution;
+        int stock, productId;
+        double displaySize, price;
+
+        System.out.println("Adding product of type: TV\n");
+        System.out.print("Product ID: ");
+        productId = ScannerUtil.scanner.nextInt();
+        if (productExists(productId)) {
+            System.out.println("Product with the same ID already exists.");
+            ConsoleUtil.pauseConsole();
+            return;
+        }
+
+        System.out.print("Name: ");
+        name = ScannerUtil.scanner.nextLine();
+
+        System.out.print("Screen type: ");
+        screenType = ScannerUtil.scanner.nextLine();
+
+        System.out.print("Resolution: ");
+        resolution = ScannerUtil.scanner.nextLine();
+
+        System.out.print("Display size (inches): ");
+        displaySize = ScannerUtil.scanner.nextDouble();
+
+        System.out.print("Stock quantity: ");
+        stock = ScannerUtil.scanner.nextInt();
+
+        System.out.print("Price (RM): ");
+        price = ScannerUtil.scanner.nextDouble();
+
+        Product product = new TV(productId, name, stock, price, screenType, resolution, displaySize, true);
+        productArray[++numOfProduct] = product;
+        ProductUtil.addProduct(product);
+    }
+
+    private static boolean productExists(int productId) {
+        for (int i = 0; i < numOfProduct; i++) {
+            if (productId == productArray[i].getProductId()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

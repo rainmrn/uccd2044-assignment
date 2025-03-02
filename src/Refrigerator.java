@@ -1,18 +1,18 @@
 public class Refrigerator extends Product {
     private String doorDesign, color;
-    private int capacity;
+    private double capacity;
 
     public Refrigerator(
-        int productId,
-        String name,
-        int quantity, 
-        double price,
-        String doorDesign,
-        String color,
-        int capacity,
-        boolean isActive ) {
+            int productId,
+            String name,
+            int stock,
+            double price,
+            String doorDesign,
+            String color,
+            double capacity,
+            boolean isActive) {
 
-        super(productId, name, quantity, price, isActive);
+        super(productId, name, stock, price, isActive);
         this.doorDesign = doorDesign;
         this.color = color;
         setCapacity(capacity);
@@ -28,7 +28,7 @@ public class Refrigerator extends Product {
         return color;
     }
 
-    public int getCapacity() {
+    public double getCapacity() {
         return capacity;
     }
 
@@ -42,26 +42,26 @@ public class Refrigerator extends Product {
         this.color = color;
     }
 
-    public void setCapacity(int capacity) {
+    public void setCapacity(double capacity) {
         if (capacity > 0) {
             this.capacity = capacity;
         } else {
-            this.capacity = 1;
+            this.capacity = 1.0;
         }
     }
 
     /* --------------- Methods --------------- */
-    
+
     @Override
     public String toString() {
         return "Item number: " + getProductId() +
-        "\nProduct name: " + getName() +
-        "\nDoor design: " + getDoorDesign() +
-        "\nColor: " + getColor() +
-        "\nCapacities (in litres): " + getCapacity() +
-        "\nQuantity available: " + getQuantity() +
-        "\nPrice (RM): " + getPrice() +
-        "\nInventory value (RM): " + getTotalInventoryValue() +
-        "\nProduct status: " + ((getIsActive()) ? "Active" : "Discontinued") ;
+                "\nProduct name: " + getName() +
+                "\nDoor design: " + getDoorDesign() +
+                "\nColor: " + getColor() +
+                "\nCapacities (in litres): " + getCapacity() +
+                "\nQuantity available: " + getStock() +
+                "\nPrice (RM): " + getPrice() +
+                "\nInventory value (RM): " + getTotalInventoryValue() +
+                "\nProduct status: " + ((getIsActive()) ? "Active" : "Discontinued");
     }
 }

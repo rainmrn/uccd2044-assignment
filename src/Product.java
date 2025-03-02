@@ -1,14 +1,16 @@
 public abstract class Product {
     private String name;
     private double price;
-    private int quantity, productId;
+    private int stock, productId;
     private boolean isActive = true;
 
-    protected Product() {}
-    protected Product(int productId, String name, int quantity, double price, boolean isActive) {
+    protected Product() {
+    }
+
+    protected Product(int productId, String name, int stock, double price, boolean isActive) {
         this.productId = productId;
         this.name = name;
-        setQuantity(quantity);
+        setStock(stock);
         setPrice(price);
         setIsActive(isActive);
     }
@@ -27,8 +29,8 @@ public abstract class Product {
         return productId;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getStock() {
+        return stock;
     }
 
     public boolean getIsActive() {
@@ -49,11 +51,11 @@ public abstract class Product {
         }
     }
 
-    public void setQuantity(int quantity) {
-        if (quantity >= 0) {
-            this.quantity = quantity;
+    public void setStock(int stock) {
+        if (stock >= 0) {
+            this.stock = stock;
         } else {
-            this.quantity = 0;
+            this.stock = 0;
         }
     }
 
@@ -66,34 +68,34 @@ public abstract class Product {
     }
 
     /* --------------- Methods --------------- */
-    
+
     public double getTotalInventoryValue() {
-        return price * quantity;
+        return price * stock;
     }
 
-    public void addQuantity(int amount) {
+    public void addStock(int amount) {
         if (!this.isActive) {
             System.out.println("Product is discontinued. No changes were made.");
         } else {
-            setQuantity(quantity + amount);
+            setStock(stock + amount);
         }
     }
 
-    public void deductQuantity(int amount) {
+    public void deductStock(int amount) {
         if (!this.isActive) {
             System.out.println("Product is discontinued. No changes were made.");
         } else {
-            setQuantity(quantity - amount);
+            setStock(stock - amount);
         }
     }
 
     @Override
     public String toString() {
         return "Item number: " + productId +
-        "\nProduct name: " + name +
-        "\nQuantity available: " + quantity +
-        "\nPrice (RM): " + price +
-        "\nInventory value (RM): " + getTotalInventoryValue() +
-        "\nProduct status: " + ((isActive) ? "Active" : "Discontinued") ;
+                "\nProduct name: " + name +
+                "\n Stock available: " + stock +
+                "\nPrice (RM): " + price +
+                "\nInventory value (RM): " + getTotalInventoryValue() +
+                "\nProduct status: " + ((isActive) ? "Active" : "Discontinued");
     }
 }

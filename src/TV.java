@@ -1,18 +1,18 @@
 public class TV extends Product {
     private String screenType, resolution;
-    private int displaySize;
+    private double displaySize;
 
     public TV(
-        int productId,
-        String name,
-        int quantity, 
-        double price,
-        String screenType,
-        String resolution,
-        int displaySize,
-        boolean isActive ) {
+            int productId,
+            String name,
+            int stock,
+            double price,
+            String screenType,
+            String resolution,
+            double displaySize,
+            boolean isActive) {
 
-        super(productId, name, quantity, price, isActive);
+        super(productId, name, stock, price, isActive);
         this.screenType = screenType;
         this.resolution = resolution;
         setDisplaySize(displaySize);
@@ -28,7 +28,7 @@ public class TV extends Product {
         return resolution;
     }
 
-    public int getDisplaySize() {
+    public double getDisplaySize() {
         return displaySize;
     }
 
@@ -42,26 +42,26 @@ public class TV extends Product {
         this.resolution = resolution;
     }
 
-    public void setDisplaySize(int displaySize) {
+    public void setDisplaySize(double displaySize) {
         if (displaySize > 0) {
             this.displaySize = displaySize;
         } else {
-            this.displaySize = 1;
+            this.displaySize = 1.0;
         }
     }
 
     /* --------------- Methods --------------- */
-    
+
     @Override
     public String toString() {
         return "Item number: " + getProductId() +
-        "\nProduct name: " + getName() +
-        "\nScreen type: " + getScreenType() +
-        "\nResolution: " + getResolution() +
-        "\nDisplay size (in inches): " + getDisplaySize() +
-        "\nQuantity available: " + getQuantity() +
-        "\nPrice (RM): " + getPrice() +
-        "\nInventory value (RM): " + getTotalInventoryValue() +
-        "\nProduct status: " + ((getIsActive()) ? "Active" : "Discontinued") ;
+                "\nProduct name: " + getName() +
+                "\nScreen type: " + getScreenType() +
+                "\nResolution: " + getResolution() +
+                "\nDisplay size (in inches): " + getDisplaySize() +
+                "\nQuantity available: " + getStock() +
+                "\nPrice (RM): " + getPrice() +
+                "\nInventory value (RM): " + getTotalInventoryValue() +
+                "\nProduct status: " + ((getIsActive()) ? "Active" : "Discontinued");
     }
 }
