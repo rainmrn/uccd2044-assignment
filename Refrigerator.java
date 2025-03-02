@@ -9,9 +9,10 @@ public class Refrigerator extends Product {
         double price,
         String doorDesign,
         String color,
-        int capacity ) {
+        int capacity,
+        boolean isActive ) {
 
-        super(productId, name, quantity, price);
+        super(productId, name, quantity, price, isActive);
         this.doorDesign = doorDesign;
         this.color = color;
         setCapacity(capacity);

@@ -5,11 +5,12 @@ public abstract class Product {
     private boolean isActive = true;
 
     protected Product() {}
-    protected Product(int productId, String name, int quantity, double price) {
+    protected Product(int productId, String name, int quantity, double price, boolean isActive) {
         this.productId = productId;
         this.name = name;
         setQuantity(quantity);
         setPrice(price);
+        setIsActive(isActive);
     }
 
     /* --------------- Getter --------------- */

@@ -9,9 +9,10 @@ public class TV extends Product {
         double price,
         String screenType,
         String resolution,
-        int displaySize ) {
+        int displaySize,
+        boolean isActive ) {
 
-        super(productId, name, quantity, price);
+        super(productId, name, quantity, price, isActive);
         this.screenType = screenType;
         this.resolution = resolution;
         setDisplaySize(displaySize);
