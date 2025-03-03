@@ -1,10 +1,32 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import org.json.JSONObject;
 
-public class Main {
+public class Main extends Application {
     private static UserInfo user;
     private static int maxNumOfProduct;
     private static int numOfProduct = 0;
@@ -12,43 +34,145 @@ public class Main {
     private static Product[] productArray;
     private static Product[] activeProductArray;
 
+    // UI Elements
+    BorderPane root = new BorderPane();
+    VBox leftSidebar = createSidebar();
+    StackPane mainPanel = new StackPane();
+    Group welcomeScreen = createWelcomeScreen();
+    TableView<Product> viewProductsTable = createViewProductsTable();
+
     public static void main(String[] args) {
-        init();
-        int selection;
-        do {
-            selection = menu();
-            switch (selection) {
-                case 1:
-                    displayProduct(false);
-                    ConsoleUtil.pauseConsole();
-                    break;
-                case 2:
-                    displayProduct(false);
-                    System.out.print("\nSelect a product to add stock: ");
-                    addStock(ScannerUtil.scanner.nextInt() - 1);
-                    break;
-                case 3:
-                    displayProduct(false);
-                    System.out.print("\nSelect a product to deduct stock: ");
-                    deductStock(ScannerUtil.scanner.nextInt() - 1);
-                    break;
-                case 4:
-                    displayProduct(true);
-                    System.out.print("\nSelect a product to discontinue: ");
-                    discontinueProduct(ScannerUtil.scanner.nextInt() - 1);
-                    break;
-                case 5:
-                    addProductPrompt();
-                    break;
-                case 6:
-                    resetApp();
-                    break;
-                default:
-                    break;
+        initApp();
+        launch(args);
+        // int selection;
+        // do {
+        // selection = menu();
+        // switch (selection) {
+        // case 1:
+        // displayProduct(false);
+        // ConsoleUtil.pauseConsole();
+        // break;
+        // case 2:
+        // displayProduct(false);
+        // System.out.print("\nSelect a product to add stock: ");
+        // addStock(ScannerUtil.scanner.nextInt() - 1);
+        // break;
+        // case 3:
+        // displayProduct(false);
+        // System.out.print("\nSelect a product to deduct stock: ");
+        // deductStock(ScannerUtil.scanner.nextInt() - 1);
+        // break;
+        // case 4:
+        // displayProduct(true);
+        // System.out.print("\nSelect a product to discontinue: ");
+        // discontinueProduct(ScannerUtil.scanner.nextInt() - 1);
+        // break;
+        // case 5:
+        // addProductPrompt();
+        // break;
+        // case 6:
+        // resetApp();
+        // break;
+        // default:
+        // break;
+        // }
+        // } while (selection != 0 && selection != 6);
+        // ProductUtil.writeProduct();
+        // ScannerUtil.scanner.close();
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        try {
+
+            mainPanel.setMinSize(400, 400);
+            mainPanel.setPadding(new Insets(10));
+            mainPanel.getChildren().addAll(welcomeScreen);
+
+            root.setLeft(leftSidebar);
+            root.setCenter(mainPanel);
+
+            Scene scene = new Scene(root);
+            stage.setTitle("Stock Management System");
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private VBox createSidebar() {
+        VBox sidebar = new VBox();
+
+        // Buttons
+        Button sideBarBtn0 = new Button("Home");
+        Button sideBarBtn1 = new Button("View Products");
+        Button sideBarBtn2 = new Button("Add Stock");
+        Button sideBarBtn3 = new Button("Deduct Stock");
+        Button sideBarBtn4 = new Button("Discontinue Product");
+        Button sideBarBtn5 = new Button("Exit");
+        sideBarBtn0.setMaxWidth(Double.MAX_VALUE);
+        sideBarBtn1.setMaxWidth(Double.MAX_VALUE);
+        sideBarBtn2.setMaxWidth(Double.MAX_VALUE);
+        sideBarBtn3.setMaxWidth(Double.MAX_VALUE);
+        sideBarBtn4.setMaxWidth(Double.MAX_VALUE);
+        sideBarBtn5.setMaxWidth(Double.MAX_VALUE);
+
+        // Event handling
+        sideBarBtn0.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                mainPanel.getChildren().clear();
+                mainPanel.getChildren().add(welcomeScreen);
             }
-        } while (selection != 0 && selection != 6);
-        ProductUtil.writeProduct();
-        ScannerUtil.scanner.close();
+        });
+        sideBarBtn1.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                mainPanel.getChildren().clear();
+                mainPanel.getChildren().add(viewProductsTable);
+            }
+        });
+
+        // Properties
+        sidebar.setPadding(new Insets(15));
+        sidebar.setSpacing(10);
+
+        // Add buttons to sidebar
+        sidebar.getChildren().addAll(sideBarBtn0, sideBarBtn1, sideBarBtn2, sideBarBtn3, sideBarBtn4, sideBarBtn5);
+
+        return sidebar;
+    }
+
+    private static Group createWelcomeScreen() {
+        Group welcomeScreen = new Group();
+        Label welcomeText = new Label("Welcome " + ConfigUtil.config.getString("name"));
+        welcomeScreen.getChildren().addAll(welcomeText);
+
+        return welcomeScreen;
+    }
+
+    private static TableView<Product> createViewProductsTable() {
+        TableView<Product> table = new TableView<Product>();
+
+        ObservableList<Product> productList = FXCollections.observableArrayList();
+
+        for (int i = 0; i < numOfProduct; i++) {
+            productList.add(productArray[i]);
+        }
+        
+        table.setItems(productList);
+
+        TableColumn<Product, String> col1 = new TableColumn<Product, String>("Product Name");
+        col1.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
+        TableColumn<Product, String> col2 = new TableColumn<Product, String>("Stock Quantity");
+        col2.setCellValueFactory(new PropertyValueFactory<Product, String>("stock"));
+        TableColumn<Product, String> col3 = new TableColumn<Product, String>("Product ID");
+        col3.setCellValueFactory(new PropertyValueFactory<Product, String>("productId"));
+        TableColumn<Product, String> col4 = new TableColumn<Product, String>("Status");
+        col4.setCellValueFactory(new PropertyValueFactory<Product, String>("isActive"));
+
+        table.getColumns().setAll(col1, col2, col3, col4);
+        
+        return table;
     }
 
     /**
@@ -60,7 +184,7 @@ public class Main {
      * and saves these details in the configuration file. If the configuration
      * is not empty, it reads the existing configuration.
      */
-    private static void init() {
+    private static void initApp() {
         ConfigUtil.initConfigFile();
         ProductUtil.initProductFile();
 

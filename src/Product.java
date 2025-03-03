@@ -1,3 +1,7 @@
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public abstract class Product {
     private String name;
     private double price;
@@ -35,6 +39,11 @@ public abstract class Product {
 
     public boolean getIsActive() {
         return isActive;
+    }
+
+    // for TableView
+    public StringProperty isActiveProperty() {
+        return (isActive ? new SimpleStringProperty("Active") : new SimpleStringProperty("Discontinued"));
     }
 
     /* --------------- Setter --------------- */
