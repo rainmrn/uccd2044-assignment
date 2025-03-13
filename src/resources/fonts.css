@@ -1,0 +1,14 @@
+@font-face {
+    font-family: 'Sarasa UI SC';
+    src: url("fonts/SarasaUiSC-Regular.ttf");
+}
+
+@font-face {
+    font-family: 'Sarasa UI SC Bold';
+    src: url("fonts/SarasaUiSC-Bold.ttf");
+}
+
+.label,
+.button, .list-cell {
+    -fx-font-family: 'Sarasa UI SC';
+}
