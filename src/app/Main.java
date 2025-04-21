@@ -1,12 +1,11 @@
 package app;
 
+import controller.MainController;
+import controller.SidebarController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
-import controller.MainController;
-import controller.SidebarController;
 
 public class Main extends Application {
     public static Stage currentStage;
