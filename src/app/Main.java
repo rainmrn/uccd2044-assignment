@@ -10,7 +10,7 @@ public class Main
 
 	public static void main(String[] args)
 	{
-		String username,addproducts,exit,choice;
+		String username,choice;
 		LocalDateTime date = LocalDateTime.now();
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 		String sysdate = date.format(format);
@@ -22,74 +22,49 @@ public class Main
 		username = scanner.nextLine();
 		System.out.println("Welcome "+ username + "!");		
 		
-		while (true){
-			System.out.print("Do you wish to add any products? (y/n): ");
-			addproducts=scanner.nextLine().trim().toLowerCase();
-			if(addproducts.equals("y"))
-			{
-				boolean validChoice = false;
-				while(!validChoice)
-				{
-					//display menu option
-			        System.out.println("Menu Options: ");
-			        System.out.println("1. View products");
-			        System.out.println("2. Add stock");
-			        System.out.println("3. Deduct stock");
-			        System.out.println("4. Discontinue a product");
-			        System.out.println("5. Exit");
-			        System.out.print("Please enter a number: ");
-			        choice = scanner.nextLine().trim();;
-				
-			        if (choice.equals("1")) 
-			        {
-			        	System.out.println("Viewing products...");
-			            
-			        } 
-			        else if (choice.equals("2")) 
-			        {
-			        	System.out.println("Adding stock...");
-			            
-			        } 
-			        else if (choice.equals("3")) 
-			        {
-			        	System.out.println("Deducting stock...");
-			            
-			        } 
-			        else if (choice.equals("4")) 
-			        {
-			        	System.out.println("Discontinuing product...");
-			            
-			        } 
-			        else if (choice.equals("5")) 
-			        {
-			        	System.out.println("Returning to main menu...\n");
-			            validChoice = true; // break the menu loop
-			        } 
-			        else 
-			        {
-			            System.out.println("Invalid choice! Please try again.\n");
-			        }
-				}
+		   while (true) 
+		   {
+	            // Display menu options
+	            System.out.println("Menu Options:");
+	            System.out.println("1. View products");
+	            System.out.println("2. Add products");
+	            System.out.println("3. Add stock");
+	            System.out.println("4. Deduct stock");
+	            System.out.println("5. Discontinue a product");
+	            System.out.println("6. Exit program");
+	            System.out.print("Please enter a number: ");
+	            choice = scanner.nextLine().trim();
 
-			}
-			else if (addproducts.equals("n"))
-			{
-				System.out.println("Please enter a zero value to exit the program.");
-				exit =scanner.nextLine();
-				if(exit.equals("0"))
-				{
-					System.out.println("Exiting the program...");
-					scanner.close();
-					return;
-				}
-				else 
-				{
-                    System.out.println("Invalid exit value! Returning to main menu.\n");
-                }
-			}
-			else
-				System.out.println("Invalid input! Please try again.\n");
-
-		}
-	}
+	            if (choice.equals("1")) 
+	            {
+	                System.out.println("Viewing products...\n");
+	            } 
+	            else if (choice.equals("2")) 
+	            {
+	                System.out.println("Adding new products...\n");
+	                // Later: you can ask user for product name, price, stock, etc here
+	            } 
+	            else if (choice.equals("3")) 
+	            {
+	                System.out.println("Adding stock to existing products...\n");
+	            } 
+	            else if (choice.equals("4")) 
+	            {
+	                System.out.println("Deducting stock from products...\n");
+	            } 
+	            else if (choice.equals("5")) 
+	            {
+	                System.out.println("Discontinuing a product...\n");
+	            } 
+	            else if (choice.equals("6")) 
+	            {
+	                System.out.println("Exiting the program...");
+	                scanner.close();
+	                return;
+	            } 
+	            else {
+	                System.out.println("Invalid choice! Please try again.\n");
+	            }
+	        }
+	    }
 }
