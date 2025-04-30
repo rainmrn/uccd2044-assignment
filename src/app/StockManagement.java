@@ -90,6 +90,8 @@ public class StockManagement {
 		int index = selectProduct(scanner);
 		int qty;
 		
+		System.out.print("Enter quantity to add: ");
+		
 		do {
 			while (!scanner.hasNextInt()) {
 				System.out.print("Invalid input! Enter a positive number: ");
@@ -100,8 +102,30 @@ public class StockManagement {
 		
 		products[index].addQuantity(qty);
 		System.out.println("Stock updated successfully.");
-		
 	}
+	
+	
+	//Deduct stock
+	public static void deductStock(Product[] products, Scanner scanner) {
+		int index = selectProduct(scanner);
+		int maxQty = products[index].getQuantity_available();
+		int qty;
+		
+		System.out.print("Enter quantity to deduct: ");
+		
+		do {
+			while(!scanner.hasNextInt()) {
+				System.out.print("Invalid input! Enter a number (0 - " + maxQty + "): ");
+				scanner.next();
+			}
+			qty = scanner.nextInt();
+		}while(qty < 0 || qty > maxQty);
+		
+		products[index].deductQuantity(qty);
+		System.out.println("Stock deducted successfully.");
+	}
+	
+	
 	
 
 
