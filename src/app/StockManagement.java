@@ -56,7 +56,33 @@ public class StockManagement {
 		
 		return index;
 			
-		}
+	}
+	
+	
+	//Display menu and get choice
+	public static int menuChoice(Scanner scanner) {
+		int choice;
+		
+		System.out.println("\n1. View products");
+		System.out.println("2. Add stock");
+		System.out.println("3. Deduct stock");
+		System.out.println("4. Discontinue product");
+		System.out.println("0. Exit");
+		System.out.print("Please enter a menu option: ");
+		
+		do {
+			//Input is not an integer
+			while (!scanner.hasNextInt()) {
+				System.out.print("Invalid input! Enter a number (0-4): ");
+				scanner.next();
+			}
+			System.out.print("Please enter a menu option. Enter a number (0-4): ");
+			choice = scanner.nextInt();
+			
+		}while(choice < 0 || choice > 4);
+		
+		return choice;
+	}
 	
 	
 
@@ -67,10 +93,17 @@ public class StockManagement {
 	
 	public static void main(String[] args) {
 		
-		Scanner scanner = new Scanner(System.in);
-		int maxProducts = getMaxProducts(scanner);
-		products = new Product[maxProducts];
-				
+		Scanner scanner = new Scanner(System.in); 
+		/* int maxProducts = getMaxProducts(scanner);
+		 * products = new Product[maxProducts];
+		 */
+		
+		int choice;
+		do {
+			choice = menuChoice(scanner);
+			
+		}while(choice != 0);
+		scanner.close();
 	}
 
 }
