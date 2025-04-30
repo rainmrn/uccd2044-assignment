@@ -134,7 +134,29 @@ public class StockManagement {
 	}
 	
 	
-	
+	//Execute methods based on menu choice
+	public static void executeMenuChoice(int choice, Product[] products, Scanner scanner) {
+		switch(choice) {
+		
+		case 1:
+			selectProduct(products, scanner);
+			break;
+		case 2:
+			addStock(products, scanner);
+			break;
+		case 3:
+			deductStock(products, scanner);
+			break;
+		case 4:
+			discontinueProduct(products, scanner);
+			break;
+		case 0:
+			System.out.println("Exiting system...");
+			break;
+		default:
+			System.out.println("Invalid option!");
+		}
+	}
 	
 
 
