@@ -29,7 +29,7 @@ public class StockManagement {
 	
 	
 	//Display products[] and let user to select product that they want to update
-	public static int selectProduct(Scanner scanner) {
+	public static int selectProduct(Product[] products, Scanner scanner) {
 		int index;
 		
 		if(products.length == 0) {
@@ -87,7 +87,7 @@ public class StockManagement {
 	
 	//Add stock
 	public static void addStock(Product[] products, Scanner scanner) {
-		int index = selectProduct(scanner);
+		int index = selectProduct(products, scanner);
 		int qty;
 		
 		System.out.print("Enter quantity to add: ");
@@ -107,7 +107,7 @@ public class StockManagement {
 	
 	//Deduct stock
 	public static void deductStock(Product[] products, Scanner scanner) {
-		int index = selectProduct(scanner);
+		int index = selectProduct(products, scanner);
 		int maxQty = products[index].getQuantity_available();
 		int qty;
 		
@@ -124,6 +124,15 @@ public class StockManagement {
 		products[index].deductQuantity(qty);
 		System.out.println("Stock deducted successfully.");
 	}
+	
+	
+	//Discontinue product
+	public static void discontinueProduct(Product[] products, Scanner scanner) {
+		int index = selectProduct(products, scanner);
+		products[index].setStatus(false);
+		System.out.println("Product marked as discontinued.");
+	}
+	
 	
 	
 	
