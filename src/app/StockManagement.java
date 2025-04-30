@@ -17,7 +17,7 @@ public class StockManagement {
 		
 			while(!scanner.hasNextInt()) {
 				System.out.print("Invalid input! Please enter an positive integer: ");
-				scanner.nextInt();
+				scanner.next();
 			 }
 			 
 			 maxProduct = scanner.nextInt();
@@ -29,7 +29,7 @@ public class StockManagement {
 	
 	
 	//Display products[] and let user to select product that they want to update
-	public static int selectProducts(Scanner scanner) {
+	public static int selectProduct(Scanner scanner) {
 		int index;
 		
 		if(products.length == 0) {
@@ -46,7 +46,7 @@ public class StockManagement {
 			System.out.print("Select product index: ");
 			while (!scanner.hasNextInt()) {
 				System.out.print("Invalid input. Enter a valid product index: ");
-				scanner.nextInt();
+				scanner.next();
 			}
 			
 		index = scanner.nextInt();
@@ -84,6 +84,24 @@ public class StockManagement {
 		return choice;
 	}
 	
+	
+	//Add stock
+	public static void addStock(Product[] products, Scanner scanner) {
+		int index = selectProduct(scanner);
+		int qty;
+		
+		do {
+			while (!scanner.hasNextInt()) {
+				System.out.print("Invalid input! Enter a positive number: ");
+				scanner.next();
+			}
+			qty = scanner.nextInt();
+		}while(qty < 0);
+		
+		products[index].addQuantity(qty);
+		System.out.println("Stock updated successfully.");
+		
+	}
 	
 
 
