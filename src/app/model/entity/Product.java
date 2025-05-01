@@ -1,4 +1,4 @@
-package app;
+package app.model.entity;
 
 public abstract class Product {
 	//data fields

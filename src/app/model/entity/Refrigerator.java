@@ -1,4 +1,4 @@
-package app;
+package app.model.entity;
 //subclass of Product class
 
 public class Refrigerator extends Product {

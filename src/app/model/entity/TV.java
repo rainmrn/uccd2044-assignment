@@ -1,4 +1,4 @@
-package app;
+package app.model.entity;
 // subclass of the Product class
 
 public class TV extends Product{
