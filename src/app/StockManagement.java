@@ -17,7 +17,8 @@ public class StockManagement {
 		System.out.println("Welcome to SMS!\nDate and Time: " + currentDateString);
 		System.out.println("Group Member: \nChan Sin Ying\nChen Lee Peng\nLim Qi Xun\nOh Yi Heng\n");
 
-		CLI.promptName();
+		UserInfoRepo.user.setName(CLI.getFullName());
+		UserInfoRepo.user.setUserId(UserInfoRepo.generateUserId());
 		System.out.println("Welcome " + UserInfoRepo.user.getName() + "!");
 
 		CLI.promptMaxProduct();

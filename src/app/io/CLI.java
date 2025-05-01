@@ -6,24 +6,15 @@ import app.model.entity.Product;
 import app.model.entity.Refrigerator;
 import app.model.entity.TV;
 import app.model.repo.ProductRepo;
-import app.model.repo.UserInfoRepo;
 
 public class CLI {
     public static Scanner scanner = new Scanner(System.in);
 
-    public static void promptName() {
+    public static String getFullName() {
         System.out.print("Enter your full name (first + last): ");
         String name = scanner.nextLine();
-        
-        String userId;
-        if (name.contains(" ")) {
-            userId = name.substring(0, 1) + name.substring(name.lastIndexOf(" ") + 1);
-        } else {
-            userId = "guest";
-        }
 
-        UserInfoRepo.user.setName(name);
-        UserInfoRepo.user.setUserId(userId);
+        return name;
     }
 
     public static void promptMaxProduct() {
