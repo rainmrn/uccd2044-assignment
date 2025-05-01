@@ -19,7 +19,7 @@ public class CLI {
 
     public static void promptMaxProduct() {
         int maxProduct;
-        
+
         do {
             System.out.print("Enter the maximum number of products to store: ");
 
@@ -36,28 +36,21 @@ public class CLI {
     }
 
     public static int getMenuChoice() {
-        
+
         int choice;
 
         do {
+            ConsoleUtils.clearConsole();
             System.out.println("\n1. View products");
             System.out.println("2. Add product");
-            System.out.println("3. Remove product");
-            System.out.println("4. Add stock");
-            System.out.println("5. Deduct stock");
-            System.out.println("6. Discontinue product");
+            System.out.println("3. Add stock");
+            System.out.println("4. Deduct stock");
+            System.out.println("5. Discontinue product");
             System.out.println("0. Exit");
-            System.out.print("Please enter a menu option: ");
 
-            while (!scanner.hasNextInt()) {
-                System.out.print("Please enter a valid menu option (0-6): ");
-                scanner.next();
-            }
-
-            choice = scanner.nextInt();
+            choice = ConsoleInputHandler.readInt("Please enter a menu option: ");
 
         } while (choice < 0 || choice > 6);
-
 
         return choice;
     }
@@ -89,16 +82,9 @@ public class CLI {
 
     public static int getProductIndex() {
         int index;
-        
-        do {
-            System.out.print("Select product index: ");
-            while (!scanner.hasNextInt()) {
-                System.out.print("Invalid input. Enter a valid product index: ");
-                scanner.next();
-            }
 
-            index = scanner.nextInt();
-            System.out.println("");
+        do {
+            index = ConsoleInputHandler.readInt("Select product index: ");
 
         } while (index < 0 || index >= ProductRepo.productArrayList.size());
 
@@ -107,50 +93,36 @@ public class CLI {
 
     public static int getQuantity() {
         int qty;
-        
-
-        System.out.print("Enter quantity: ");
 
         do {
-            while (!scanner.hasNextInt()) {
-                System.out.print("Invalid input! Enter a positive number: ");
-                scanner.next();
-            }
-            qty = scanner.nextInt();
+            qty = ConsoleInputHandler.readInt("Enter quantity: ");
         } while (qty < 0);
 
         return qty;
     }
 
     public static Product getNewProduct() {
-        
-		int type;
 
-		do {
-			System.out.print("\nEnter product type (1 - Refrigerator, 2 - TV): ");
+        int type;
 
-			while (!scanner.hasNextInt()) {
-				scanner.next();
-				System.out.print("Only number 1 or 2 allowed! Try again: ");
-			}
-			type = scanner.nextInt();
-			if (type < 1 || type > 2) {
-				System.out.println("Only number 1 or 2 allowed!");
-			}
+        do {
+            type = ConsoleInputHandler.readInt("Enter product type (1 - Refrigerator, 2 - TV): ");
 
-		} while (type != 1 && type != 2);
+            if (type < 1 || type > 2) {
+                System.out.println("Only number 1 or 2 allowed!");
+            }
 
+        } while (type != 1 && type != 2);
 
-		if (type == 1) {
-			return (Product) getNewRefrigerator();
-		}
-		else {
-			return (Product) getNewTV();
-		}
+        if (type == 1) {
+            return (Product) getNewRefrigerator();
+        } else {
+            return (Product) getNewTV();
+        }
     }
 
     public static Refrigerator getNewRefrigerator() {
-        
+
         scanner.nextLine(); // clear buffer
 
         System.out.print("Enter product name: ");
@@ -162,49 +134,35 @@ public class CLI {
         System.out.print("Enter color: ");
         String color = scanner.nextLine();
 
-        System.out.print("Enter capacity (L): ");
-        int cap = scanner.nextInt();
-
-        System.out.print("Enter quantity available: ");
-        int qty = scanner.nextInt();
-
-        System.out.print("Enter price: ");
-        double price = scanner.nextDouble();
-        scanner.nextLine(); // clear buffer
+        int cap = ConsoleInputHandler.readInt("Enter capacity (L): ");
+        int qty = ConsoleInputHandler.readInt("Enter quantity available: ");
+        double price = ConsoleInputHandler.readDouble("Enter price: ");
 
         System.out.print("Enter item number: ");
         String id = scanner.nextLine();
-
 
         return new Refrigerator(name, price, qty, id, door, color, cap);
     }
 
     public static TV getNewTV() {
-        
+
         scanner.nextLine(); // clear buffer
 
         System.out.print("Enter product name: ");
-		String name = scanner.nextLine();
+        String name = scanner.nextLine();
 
-		System.out.print("Enter screen type: ");
-		String screen = scanner.nextLine();
+        System.out.print("Enter screen type: ");
+        String screen = scanner.nextLine();
 
-		System.out.print("Enter resolution: ");
-		String res = scanner.nextLine();
+        System.out.print("Enter resolution: ");
+        String res = scanner.nextLine();
 
-		System.out.print("Enter display size: ");
-		int size = scanner.nextInt();
+        int size = ConsoleInputHandler.readInt("Enter display size: ");
+        int qty = ConsoleInputHandler.readInt("Enter quantity available: ");
+        double price = ConsoleInputHandler.readDouble("Enter price: ");
 
-		System.out.print("Enter quantity available: ");
-		int qty = scanner.nextInt();
-
-		System.out.print("Enter price: ");
-		double price = scanner.nextDouble();
-		scanner.nextLine(); // clear buffer
-
-		System.out.print("Enter item number: ");
-		String id = scanner.nextLine();
-
+        System.out.print("Enter item number: ");
+        String id = scanner.nextLine();
 
         return new TV(name, price, qty, id, screen, res, size);
     }

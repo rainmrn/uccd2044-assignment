@@ -1,7 +1,6 @@
 package app.model.repo;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import app.model.entity.Product;
 

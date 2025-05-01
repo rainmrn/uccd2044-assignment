@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import app.io.CLI;
+import app.io.ConsoleUtils;
 import app.model.repo.ProductRepo;
 import app.model.repo.UserInfoRepo;
 
@@ -36,15 +37,16 @@ public class StockManagement {
 		switch (choice) {
 			case 1:
 				CLI.viewProducts();
+				ConsoleUtils.pauseConsole();
 				break;
 			case 2:
-				if (!ProductRepo.hasProduct()) {
-					System.out.println("No products available.");
-					return;
+				if (ProductRepo.getNumOfProduct() < ProductRepo.getMaxProduct()) {
+					ProductRepo.addProduct(CLI.getNewProduct());
+					System.out.println("Product added.");
+				} else {
+					System.out.println("Max num of products reached.");
 				}
-				CLI.showProductSelection();
-				ProductRepo.addStock(CLI.getProductIndex(), CLI.getQuantity());
-				System.out.println("Stock added successfully.");
+				ConsoleUtils.pauseConsole();
 				break;
 			case 3:
 				if (!ProductRepo.hasProduct()) {
@@ -52,8 +54,9 @@ public class StockManagement {
 					return;
 				}
 				CLI.showProductSelection();
-				ProductRepo.deductStock(CLI.getProductIndex(), CLI.getQuantity());
-				System.out.println("Stock deducted successfully.");
+				ProductRepo.addStock(CLI.getProductIndex(), CLI.getQuantity());
+				System.out.println("Stock added successfully.");
+				ConsoleUtils.pauseConsole();
 				break;
 			case 4:
 				if (!ProductRepo.hasProduct()) {
@@ -61,12 +64,19 @@ public class StockManagement {
 					return;
 				}
 				CLI.showProductSelection();
-				ProductRepo.discontinueProduct(CLI.getProductIndex());
-				System.out.println("Product marked as discontinued.");
+				ProductRepo.deductStock(CLI.getProductIndex(), CLI.getQuantity());
+				System.out.println("Stock deducted successfully.");
+				ConsoleUtils.pauseConsole();
 				break;
 			case 5:
-				ProductRepo.addProduct(CLI.getNewProduct());
-				System.out.println("Product added.");
+				if (!ProductRepo.hasProduct()) {
+					System.out.println("No products available.");
+					return;
+				}
+				CLI.showProductSelection();
+				ProductRepo.discontinueProduct(CLI.getProductIndex());
+				System.out.println("Product marked as discontinued.");
+				ConsoleUtils.pauseConsole();
 				break;
 			case 0:
 				System.out.println("Exiting system...");
