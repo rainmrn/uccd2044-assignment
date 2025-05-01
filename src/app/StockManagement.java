@@ -7,6 +7,23 @@ public class StockManagement {
 	
 	private static ArrayList<Product> products = new ArrayList<>();
 	
+	public static void main(String[] args) {
+		
+		Scanner scanner = new Scanner(System.in); 
+		int maxProducts = getMaxProducts(scanner);
+		products = new ArrayList<>();
+		
+		for(int i = 0; i < maxProducts; i++) { 
+			addProduct(products, scanner); 
+		}
+		
+		int choice;
+		do {
+			choice = menuChoice(scanner);
+			executeMenuChoice(choice, products, scanner);
+		}while(choice != 0);
+		scanner.close();
+	}
 	
 	//Get the maximum number of products the user wishes to store in the system
 	public static int getMaxProducts(Scanner scanner) {
@@ -270,25 +287,6 @@ public class StockManagement {
 	    	}
 	    }
 
-	}
-
-	
-	public static void main(String[] args) {
-		
-		Scanner scanner = new Scanner(System.in); 
-		int maxProducts = getMaxProducts(scanner);
-		products = new ArrayList<>();
-		
-		for(int i = 0; i < maxProducts; i++) { 
-			addProduct(products, scanner); 
-		}
-		
-		int choice;
-		do {
-			choice = menuChoice(scanner);
-			executeMenuChoice(choice, products, scanner);
-		}while(choice != 0);
-		scanner.close();
 	}
 
 }
