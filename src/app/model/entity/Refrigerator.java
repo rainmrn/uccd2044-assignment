@@ -6,7 +6,7 @@ public class Refrigerator extends Product {
 	private String doorDesign;
 	private String color;
 	private int capacity;
-	
+
 	// parameterized constructor
 	public Refrigerator(String name, double price, int quantity_available, String product_id, String doorDesign,
 			String color, int capacity) {
@@ -16,7 +16,7 @@ public class Refrigerator extends Product {
 		this.capacity = capacity;
 	}
 
-	//Getter & setter
+	// Getter & setter
 	public String getDoorDesign() {
 		return doorDesign;
 	}
@@ -40,23 +40,22 @@ public class Refrigerator extends Product {
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
 	}
-	
-	//method
-	public double calculateStockValue()
-	{
+
+	// method
+	public double calculateStockValue() {
 		return super.totalInventoryValue();
 	}
 
 	@Override
 	public String toString() {
-		return "Item number         : " + super.getProduct_id() +
+		return "Item number         : " + super.getProductId() +
 				"\nProduct name        : " + super.getName() +
 				"\nDoor Design         : " + doorDesign +
-				"\nColor               : " + color + 
+				"\nColor               : " + color +
 				"\nCapacity (in Litres): " + capacity +
-				"\nQuantity available  : " + super.getQuantity_available() +
+				"\nQuantity available  : " + super.getQuantity() +
 				"\nPrice (RM)          : " + super.getPrice() +
 				"\nInventory value (RM): " + super.totalInventoryValue() +
-				"\nProduct status      : " + (super.isStatus()? "Active" : "Discontinue") + "\n";
+				"\nProduct status      : " + (super.getStatus() ? "Active" : "Discontinue") + "\n";
 	}
 }

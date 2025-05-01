@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.gui.controller.ProductListController">
+   <children>
+      <ListView fx:id="productListView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#onItemSelect" prefHeight="180.0" prefWidth="400.0" VBox.vgrow="ALWAYS">
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin></ListView>
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+         <children>
+            <Label fx:id="detailsProductName" maxHeight="1.7976931348623157E308" maxWidth="450.0" text="Product Name">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="6.0" top="6.0" />
+               </VBox.margin>
+            </Label>
+            <HBox spacing="20.0">
+               <children>
+                  <GridPane hgap="10.0" HBox.hgrow="ALWAYS">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="120.0" />
+                      <ColumnConstraints hgrow="NEVER" minWidth="-Infinity" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Type" textFill="#00000099">
+                           <padding>
+                              <Insets bottom="4.0" />
+                           </padding></Label>
+                        <Label text="Item number" textFill="#00000099" GridPane.rowIndex="1">
+                           <padding>
+                              <Insets bottom="4.0" />
+                           </padding></Label>
+                        <Label fx:id="detailsItemNum" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Label text="Stock available" textFill="#00000099" GridPane.rowIndex="2">
+                           <padding>
+                              <Insets bottom="4.0" />
+                           </padding></Label>
+                        <Label fx:id="detailsStock" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <Label text="Price (RM)" textFill="#00000099" GridPane.rowIndex="3">
+                           <padding>
+                              <Insets bottom="4.0" />
+                           </padding></Label>
+                        <Label text="Product status" textFill="#00000099" GridPane.rowIndex="4">
+                           <padding>
+                              <Insets bottom="4.0" />
+                           </padding></Label>
+                        <Label fx:id="extraDetail1" textFill="#00000099" GridPane.rowIndex="6">
+                           <padding>
+                              <Insets bottom="4.0" />
+                           </padding></Label>
+                        <Label fx:id="extraDetail2" textFill="#00000099" GridPane.rowIndex="7">
+                           <padding>
+                              <Insets bottom="4.0" />
+                           </padding></Label>
+                        <Label fx:id="extraDetail3" textFill="#00000099" GridPane.rowIndex="8">
+                           <padding>
+                              <Insets bottom="4.0" />
+                           </padding></Label>
+                        <Label fx:id="detailsPrice" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <Label fx:id="detailsStatus" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <Separator fx:id="separator" prefWidth="200.0" visible="false" GridPane.columnSpan="2147483647" GridPane.rowIndex="5">
+                           <padding>
+                              <Insets bottom="4.0" top="3.0" />
+                           </padding>
+                        </Separator>
+                        <Label fx:id="detailsType" GridPane.columnIndex="2" />
+                        <Label fx:id="extraDetail1Value" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                        <Label fx:id="extraDetail2Value" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                        <Label fx:id="extraDetail3Value" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                     </children>
+                  </GridPane>
+                  <VBox maxHeight="1.7976931348623157E308" HBox.hgrow="SOMETIMES">
+                     <children>
+                        <Region VBox.vgrow="ALWAYS" />
+                        <HBox fx:id="actionHBox" spacing="5.0" visible="false">
+                           <children>
+                              <Label fx:id="actionLabel" maxHeight="1.7976931348623157E308" text="Amount of stock to add:" />
+                              <TextField fx:id="actionInputField" alignment="CENTER_RIGHT" minHeight="-Infinity" minWidth="-Infinity" prefWidth="40.0" promptText="0" />
+                              <Button fx:id="actionButton" mnemonicParsing="false" text="OK" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="14.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</VBox>

@@ -1,4 +1,4 @@
-package app.io;
+package app.cli;
 
 import java.util.Scanner;
 

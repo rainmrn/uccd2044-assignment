@@ -1,4 +1,4 @@
-package app.io;
+package app.cli;
 
 import java.util.Scanner;
 
@@ -41,12 +41,12 @@ public class CLI {
 
         do {
             ConsoleUtils.clearConsole();
-            System.out.println("\n1. View products");
+            System.out.println("1. View products");
             System.out.println("2. Add product");
             System.out.println("3. Add stock");
             System.out.println("4. Deduct stock");
             System.out.println("5. Discontinue product");
-            System.out.println("0. Exit");
+            System.out.println("0. Exit\n");
 
             choice = ConsoleInputHandler.readInt("Please enter a menu option: ");
 
@@ -63,7 +63,7 @@ public class CLI {
             System.out.println("\n---------- Product List ----------");
 
             int i = 1;
-            for (Product product : ProductRepo.productArrayList) {
+            for (Product product : ProductRepo.productList) {
                 System.out.println("\nProduct" + " [" + i + "]");
                 System.out.println("-------------------");
                 System.out.println(product);
@@ -72,11 +72,18 @@ public class CLI {
         }
     }
 
-    public static void showProductSelection() {
+    public static void showProductSelection(boolean onlyActiveProducts) {
         System.out.println("\n--- Product List ---");
 
-        for (int i = 0; i < ProductRepo.productArrayList.size(); i++) {
-            System.out.println("[" + i + "]" + ": " + ProductRepo.productArrayList.get(i).getName());
+        if (onlyActiveProducts) {
+            ProductRepo.updateActiveProductList();
+            for (int i = 0; i < ProductRepo.activeProductList.size(); i++) {
+                System.out.println("[" + i + "]" + ": " + ProductRepo.activeProductList.get(i).getName());
+            }
+        } else {
+            for (int i = 0; i < ProductRepo.productList.size(); i++) {
+                System.out.println("[" + i + "]" + ": " + ProductRepo.productList.get(i).getName());
+            }
         }
     }
 
@@ -86,7 +93,7 @@ public class CLI {
         do {
             index = ConsoleInputHandler.readInt("Select product index: ");
 
-        } while (index < 0 || index >= ProductRepo.productArrayList.size());
+        } while (index < 0 || index >= ProductRepo.productList.size());
 
         return index;
     }
@@ -106,24 +113,25 @@ public class CLI {
         int type;
 
         do {
-            type = ConsoleInputHandler.readInt("Enter product type (1 - Refrigerator, 2 - TV): ");
+            type = ConsoleInputHandler.readInt("Choose product type (1 - Refrigerator, 2 - TV) [0 - cancel]: ");
 
-            if (type < 1 || type > 2) {
-                System.out.println("Only number 1 or 2 allowed!");
+            if (type < 0 || type > 2) {
+                System.out.println("Only number 0 - 2 allowed!");
             }
 
-        } while (type != 1 && type != 2);
+        } while (type < 0 || type > 2);
 
+        ConsoleInputHandler.scanner.nextLine();
         if (type == 1) {
             return (Product) getNewRefrigerator();
-        } else {
+        } else if (type == 2) {
             return (Product) getNewTV();
+        } else {
+            return null;
         }
     }
 
     public static Refrigerator getNewRefrigerator() {
-
-        scanner.nextLine(); // clear buffer
 
         System.out.print("Enter product name: ");
         String name = scanner.nextLine();
@@ -145,8 +153,6 @@ public class CLI {
     }
 
     public static TV getNewTV() {
-
-        scanner.nextLine(); // clear buffer
 
         System.out.print("Enter product name: ");
         String name = scanner.nextLine();

@@ -1,13 +1,13 @@
 package app.model.entity;
 // subclass of the Product class
 
-public class TV extends Product{
-	//additional instance variable
+public class TV extends Product {
+	// additional instance variable
 	private String screenType;
 	private String resolution;
 	private int displaySize;
-	
-	//parameterized constructor
+
+	// parameterized constructor
 	public TV(String name, double price, int quantity_available, String product_id, String screenType,
 			String resolution, int displaySize) {
 		super(name, price, quantity_available, product_id);
@@ -16,7 +16,7 @@ public class TV extends Product{
 		this.displaySize = displaySize;
 	}
 
-	//Getter & Setter
+	// Getter & Setter
 	public String getScreenType() {
 		return screenType;
 	}
@@ -40,23 +40,22 @@ public class TV extends Product{
 	public void setDisplaySize(int displaySize) {
 		this.displaySize = displaySize;
 	}
-	
-	 //method
-	public double calculateStockValue()
-	{
+
+	// method
+	public double calculateStockValue() {
 		return super.totalInventoryValue();
 	}
 
 	@Override
 	public String toString() {
-		return "Item number         : " + super.getProduct_id()
-				+ "\nProduct name        : " + super.getName() 
-				+ "\nScreenType          : " + screenType 
-				+ "\nResolution          : " + resolution 
+		return "Item number         : " + super.getProductId()
+				+ "\nProduct name        : " + super.getName()
+				+ "\nScreenType          : " + screenType
+				+ "\nResolution          : " + resolution
 				+ "\nDisplay size        : " + displaySize
-				+ "\nQuantity available  : " + super.getQuantity_available()
+				+ "\nQuantity available  : " + super.getQuantity()
 				+ "\nPrice (RM)          : " + super.getPrice()
 				+ "\nInventory value (RM): " + super.totalInventoryValue()
-				+ "\nProduct status      : " + (super.isStatus()? "Active" : "Discontinue");
+				+ "\nProduct status      : " + (super.getStatus() ? "Active" : "Discontinue");
 	}
 }
