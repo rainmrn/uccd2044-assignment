@@ -7,6 +7,7 @@ import java.util.Scanner;
 import app.gui.StockManagementGUI;
 import app.model.entity.*;
 import app.model.repo.ProductRepo;
+import app.model.repo.UserInfoRepo;
 
 public class StockManagement {
 
@@ -36,11 +37,17 @@ public class StockManagement {
 		System.out.println("Welcome to Stockwise!\nDate and Time: " + currentDateString);
 		System.out.println("\nGroup Member: \n - Chan Sin Ying\n - Chen Lee Peng\n - Lim Qi Xun\n - Oh Yi Heng\n");
 
-		Scanner scanner = new Scanner(System.in);
-		int maxProducts = getMaxProducts(scanner);
+		UserInfoRepo.user.setName(ScannerUtils.readLine("Enter your full name (first + last): "));
+		UserInfoRepo.generateUserId();
+
+		ConsoleUtils.clearConsole();
+		System.out.println("Welcome " + UserInfoRepo.user.getName() + "!");
+
+		int maxProducts = getMaxProducts();
 
 		for (int i = 0; i < maxProducts; i++) {
 			addProduct();
+			ConsoleUtils.pauseConsole();
 		}
 
 		int choice;
@@ -48,7 +55,8 @@ public class StockManagement {
 			choice = menuChoice();
 			executeMenuChoice(choice);
 		} while (choice != 0);
-		scanner.close();
+
+		ScannerUtils.close();
 	}
 
 	// Display menu and get choice
@@ -75,21 +83,36 @@ public class StockManagement {
 	// Execute methods based on menu choice
 	public static void executeMenuChoice(int choice) {
 		switch (choice) {
-
+			
 			case 1:
-				viewProducts();
-				ConsoleUtils.pauseConsole();
-				break;
+			viewProducts();
+			ConsoleUtils.pauseConsole();
+			break;
 			case 2:
-				addStock();
+				ProductRepo.updateActiveProductList();
+				if (!ProductRepo.hasActiveProduct()) {
+					System.out.println("No active products available.");
+				} else {
+					addStock();
+				}
 				ConsoleUtils.pauseConsole();
 				break;
 			case 3:
-				deductStock();
+				ProductRepo.updateActiveProductList();
+				if (!ProductRepo.hasActiveProduct()) {
+					System.out.println("No active products available.");
+				} else {
+					deductStock();
+				}
 				ConsoleUtils.pauseConsole();
 				break;
 			case 4:
-				discontinueProduct();
+				ProductRepo.updateActiveProductList();
+				if (!ProductRepo.hasActiveProduct()) {
+					System.out.println("No active products available.");
+				} else {
+					discontinueProduct();
+				}
 				ConsoleUtils.pauseConsole();
 				break;
 			case 0:
@@ -117,20 +140,12 @@ public class StockManagement {
 		}
 	}
 
-
 	// Get the maximum number of products the user wishes to store in the system
-	public static int getMaxProducts(Scanner scanner) {
+	public static int getMaxProducts() {
 		int maxProduct;
 
 		do {
-			System.out.print("Enter the number of products to store: ");
-
-			while (!scanner.hasNextInt()) {
-				System.out.print("Invalid input! Please enter an positive integer: ");
-				scanner.next();
-			}
-
-			maxProduct = scanner.nextInt();
+			maxProduct = ScannerUtils.readInt("Enter the number of products to store: ");
 
 		} while (maxProduct < 0);
 		return maxProduct;
@@ -142,11 +157,11 @@ public class StockManagement {
 			System.out.println("No products available.");
 		}
 
-		System.out.println("\n--- Product List ---");		
+		System.out.println("\n--- Product List ---");
 		for (int i = 0; i < ProductRepo.productList.size(); i++) {
 			System.out.println("[" + i + "]" + ": " + ProductRepo.productList.get(i).getName());
 		}
-		
+
 		int index;
 		do {
 			index = ScannerUtils.readInt("Select product index: ");
@@ -158,18 +173,14 @@ public class StockManagement {
 		return index;
 	}
 
-	// Display activeProductList and let user to select product that they want to update
+	// Display activeProductList and let user to select product that they want to
+	// update
 	public static int displayAndSelectActiveProduct() {
-		ProductRepo.updateActiveProductList();
-		if (!ProductRepo.hasActiveProduct()) {
-			System.out.println("No active products available.");
-		}
-
-		System.out.println("\n--- Active Product List ---");		
+		System.out.println("\n--- Active Product List ---");
 		for (int i = 0; i < ProductRepo.activeProductList.size(); i++) {
 			System.out.println("[" + i + "]" + ": " + ProductRepo.activeProductList.get(i).getName());
 		}
-		
+
 		int index;
 		do {
 			index = ScannerUtils.readInt("Select product index: ");
@@ -181,11 +192,10 @@ public class StockManagement {
 		return index;
 	}
 
-
 	// Add stock
 	public static void addStock() {
 		int index = displayAndSelectActiveProduct();
-		
+
 		int qty;
 		do {
 			qty = ScannerUtils.readInt("Enter quantity to add: ");
@@ -202,7 +212,7 @@ public class StockManagement {
 	public static void deductStock() {
 		int index = displayAndSelectActiveProduct();
 		int maxQty = ProductRepo.productList.get(index).getQuantity();
-		
+
 		int qty;
 		do {
 			String prompt = "Enter quantity to deduct (0 - " + maxQty + "): ";

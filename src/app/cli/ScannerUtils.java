@@ -36,4 +36,8 @@ public class ScannerUtils {
         System.out.print(prompt);
         return scanner.nextLine();
     }
+
+    public static void close() {
+        scanner.close();
+    }
 }
