@@ -48,7 +48,7 @@ public class StockManagement {
 		} while (addProductOrNot < 0 || addProductOrNot > 1);
 
 		if (addProductOrNot == 0) {
-			System.out.println("We are deeply saddened to see you go :(");
+			System.out.println("We are deeply saddened to see you go :(\nUserID: " + UserInfoRepo.generateUserId());
 			System.exit(0);
 		}
 
@@ -138,7 +138,7 @@ public class StockManagement {
 				ConsoleUtils.pauseConsole();
 				break;
 			case 0:
-				System.out.println("Exiting system...");
+				System.out.println("Exiting system...\nUserID: " + "UserInfoRepo.generateUserId()");
 				break;
 			default:
 				System.out.println("Invalid option!");
