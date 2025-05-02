@@ -8,9 +8,9 @@ public class TV extends Product {
 	private int displaySize;
 
 	// parameterized constructor
-	public TV(String name, double price, int quantityAvailable, String productID, String screenType,
+	public TV(String name, double price, int quantityAvailable, String itemNumber, String screenType,
 			String resolution, int displaySize) {
-		super(name, price, quantityAvailable, productID);
+		super(name, price, quantityAvailable, itemNumber);
 		this.screenType = screenType;
 		this.resolution = resolution;
 		this.displaySize = displaySize;
@@ -48,7 +48,7 @@ public class TV extends Product {
 
 	@Override
 	public String toString() {
-		return "Item number         : " + super.getProductId()
+		return "Item number         : " + super.getItemNumber()
 				+ "\nProduct name        : " + super.getName()
 				+ "\nScreenType          : " + screenType
 				+ "\nResolution          : " + resolution

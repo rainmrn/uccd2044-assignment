@@ -5,7 +5,7 @@ public abstract class Product {
 	private String name;
 	private double price;
 	private int quantityAvailable;
-	private String productID;
+	private String itemNumber;
 	private boolean status;
 
 	// default constructor
@@ -14,12 +14,12 @@ public abstract class Product {
 	}
 
 	// parameterized constructor
-	public Product(String name, double price, int quantityAvailable, String productID) {
+	public Product(String name, double price, int quantityAvailable, String itemNumber) {
 		this(); // call default constructor to set status
 		this.name = name;
 		this.price = price;
 		this.quantityAvailable = quantityAvailable;
-		this.productID = productID;
+		this.itemNumber = itemNumber;
 	}
 
 	// Getter & setter
@@ -47,12 +47,12 @@ public abstract class Product {
 		this.quantityAvailable = quantityAvailable;
 	}
 
-	public String getProductId() {
-		return productID;
+	public String getItemNumber() {
+		return itemNumber;
 	}
 
-	public void setProductId(String productID) {
-		this.productID = productID;
+	public void setItemNumber(String itemNumber) {
+		this.itemNumber = itemNumber;
 	}
 
 	public boolean getStatus() {
@@ -86,6 +86,8 @@ public abstract class Product {
 			return "Refrigerator";
 		} else if (this instanceof TV) {
 			return "TV";
+		} else if (this instanceof HairDryer) {
+			return "Hair Dryer";
 		} else {
 			return "Product";
 		}
@@ -93,7 +95,7 @@ public abstract class Product {
 
 	@Override
 	public String toString() {
-		return "Item number         : " + productID +
+		return "Item number         : " + itemNumber +
 				"\nProduct name        : " + name +
 				"\nQuantity available  : " + quantityAvailable +
 				"\nPrice (RM)          : " + price +

@@ -5,6 +5,6 @@
 
 ## Enhancements if possible
 
-- [ ] add at least one more product type plzz
+- [x] add at least one more product type plzz
 - [ ] display user id as well in home screen
 - [ ] display num of products in the form of x/y where x is num of products and y is max num of products
