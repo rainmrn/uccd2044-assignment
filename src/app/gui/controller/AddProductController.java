@@ -1,5 +1,6 @@
 package app.gui.controller;
 
+import app.model.entity.HairDryer;
 import app.model.entity.Product;
 import app.model.entity.Refrigerator;
 import app.model.entity.TV;
@@ -20,16 +21,16 @@ public class AddProductController {
     private Label extraLabel1, extraLabel2, extraLabel3, successMessage;
 
     @FXML
-    private TextField productIdTextField, nameTextField, quantityTextField, priceTextField, extraTextField1, extraTextField2, extraTextField3;
+    private TextField itemNumberTextField, nameTextField, quantityTextField, priceTextField, extraTextField1, extraTextField2, extraTextField3;
 
-    private String type, productId, name, extra1, extra2;
+    private String type, itemNumber, name, extra1, extra2;
 
     private int quantity, extra3;
 
     private double price;
 
     public void onAddProductBtnClick() {
-        productId = productIdTextField.getText();
+        itemNumber = itemNumberTextField.getText();
         name = nameTextField.getText();
         quantity = Integer.parseInt(quantityTextField.getText());
         price = Double.parseDouble(priceTextField.getText());
@@ -40,9 +41,11 @@ public class AddProductController {
         Product newProduct;
 
         if (type == "Refrigerator") {
-            newProduct = new Refrigerator(name, price, quantity, productId, extra1, extra2, extra3);
+            newProduct = new Refrigerator(name, price, quantity, itemNumber, extra1, extra2, extra3);
+        } else if (type == "TV") {
+            newProduct = new TV(name, price, quantity, itemNumber, extra1, extra2, extra3);
         } else {
-            newProduct = new TV(name, price, quantity, productId, extra1, extra2, extra3);
+            newProduct = new HairDryer(name, price, quantity, itemNumber, extra1, extra2, extra3);
         }
 
         ProductRepo.addProduct(newProduct);
@@ -54,7 +57,7 @@ public class AddProductController {
     }
 
     public void clearFields() {
-        productIdTextField.setText("");
+        itemNumberTextField.setText("");
         nameTextField.setText("");
         quantityTextField.setText("");
         priceTextField.setText("");
@@ -65,7 +68,7 @@ public class AddProductController {
 
     @FXML
     public void initialize() {
-        typeComboBox.setItems(FXCollections.observableArrayList("Refrigerator", "TV"));
+        typeComboBox.setItems(FXCollections.observableArrayList("Refrigerator", "TV", "Hair Dryer"));
         typeComboBox.setOnAction(_ -> {
             type = typeComboBox.getValue();
 
@@ -77,6 +80,10 @@ public class AddProductController {
                 extraLabel1.setText("Screen Type");
                 extraLabel2.setText("Resolution");
                 extraLabel3.setText("Size (inches)");
+            } else if (type == "Hair Dryer") {
+                extraLabel1.setText("Nozzle Type");
+                extraLabel2.setText("Color");
+                extraLabel3.setText("Power (watts)");
             }
         });
     }

@@ -81,7 +81,7 @@ public class ProductListController {
     private void updateProductDetails() {
         selectedProduct = productListView.getSelectionModel().getSelectedItem();
         detailsType.setText(selectedProduct.getType());
-        detailsItemNum.setText(selectedProduct.getProductId());
+        detailsItemNum.setText(selectedProduct.getItemNumber());
         detailsProductName.setText(selectedProduct.getName());
         detailsStock.setText(Integer.toString(selectedProduct.getQuantity()));
         detailsPrice.setText(Double.toString(selectedProduct.getPrice()));

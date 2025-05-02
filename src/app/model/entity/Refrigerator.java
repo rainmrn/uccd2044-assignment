@@ -8,9 +8,9 @@ public class Refrigerator extends Product {
 	private int capacity;
 
 	// parameterized constructor
-	public Refrigerator(String name, double price, int quantityAvailable, String productID, String doorDesign,
+	public Refrigerator(String name, double price, int quantityAvailable, String itemNumber, String doorDesign,
 			String color, int capacity) {
-		super(name, price, quantityAvailable, productID);
+		super(name, price, quantityAvailable, itemNumber);
 		this.doorDesign = doorDesign;
 		this.color = color;
 		this.capacity = capacity;
@@ -48,7 +48,7 @@ public class Refrigerator extends Product {
 
 	@Override
 	public String toString() {
-		return "Item number         : " + super.getProductId() +
+		return "Item number         : " + super.getItemNumber() +
 				"\nProduct name        : " + super.getName() +
 				"\nDoor Design         : " + doorDesign +
 				"\nColor               : " + color +

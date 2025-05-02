@@ -48,7 +48,7 @@ public class HairDryer extends Product {
 
 	@Override
 	public String toString() {
-		return "Item number         : " + super.getProductId() +
+		return "Item number         : " + super.getItemNumber() +
 				"\nProduct name        : " + super.getName() +
 				"\nNozzle Type         : " + nozzleType +
 				"\nColor               : " + color +
