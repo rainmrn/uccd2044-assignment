@@ -58,7 +58,20 @@ public class StockManagement {
 
 		ScannerUtils.close();
 	}
+	
+	
+	// Get the maximum number of products the user wishes to store in the system
+	public static int getMaxProducts() {
+		int maxProduct;
 
+		do {
+			maxProduct = ScannerUtils.readInt("Enter the number of products to store: ");
+
+		} while (maxProduct < 0);
+		return maxProduct;
+	}	
+
+	
 	// Display menu and get choice
 	public static int menuChoice() {
 		ConsoleUtils.clearConsole();
@@ -140,16 +153,6 @@ public class StockManagement {
 		}
 	}
 
-	// Get the maximum number of products the user wishes to store in the system
-	public static int getMaxProducts() {
-		int maxProduct;
-
-		do {
-			maxProduct = ScannerUtils.readInt("Enter the number of products to store: ");
-
-		} while (maxProduct < 0);
-		return maxProduct;
-	}
 
 	// Display productList and let user to select product that they want to update
 	public static int displayAndSelectProduct() {
@@ -258,29 +261,31 @@ public class StockManagement {
 
 	// Add a Refrigerator
 	public static void addRefrigerator() {
-		String productId = ScannerUtils.readLine("Enter product ID: ");
+		
 		String name = ScannerUtils.readLine("Enter product name: ");
 		String door = ScannerUtils.readLine("Enter door design: ");
 		String color = ScannerUtils.readLine("Enter color: ");
 		int cap = ScannerUtils.readInt("Enter capacity (L): ");
 		int qty = ScannerUtils.readInt("Enter quantity available: ");
 		double price = ScannerUtils.readDouble("Enter price: ");
+		String itemNumber = ScannerUtils.readLine("Enter item number: ");
 
-		ProductRepo.productList.add(new Refrigerator(name, price, qty, productId, door, color, cap));
+		ProductRepo.productList.add(new Refrigerator(name, price, qty, itemNumber, door, color, cap));
 		System.out.print("New Refrigerator added.\n");
 	}
 
 	// Add a TV
 	public static void addTV() {
-		String productId = ScannerUtils.readLine("Enter product ID: ");
+		
 		String name = ScannerUtils.readLine("Enter product name: ");
 		String screen = ScannerUtils.readLine("Enter screen type: ");
 		String res = ScannerUtils.readLine("Enter resolution: ");
 		int size = ScannerUtils.readInt("Enter display size (inches): ");
 		int qty = ScannerUtils.readInt("Enter quantity available: ");
 		double price = ScannerUtils.readDouble("Enter price: ");
+		String itemNumber = ScannerUtils.readLine("Enter item number: ");
 
-		ProductRepo.productList.add(new TV(name, price, qty, productId, screen, res, size));
+		ProductRepo.productList.add(new TV(name, price, qty, itemNumber, screen, res, size));
 		System.out.print("New TV added.\n");
 	}
 }
