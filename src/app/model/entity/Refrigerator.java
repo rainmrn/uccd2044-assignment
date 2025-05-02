@@ -8,9 +8,9 @@ public class Refrigerator extends Product {
 	private int capacity;
 
 	// parameterized constructor
-	public Refrigerator(String name, double price, int quantity_available, String product_id, String doorDesign,
+	public Refrigerator(String name, double price, int quantityAvailable, String productID, String doorDesign,
 			String color, int capacity) {
-		super(name, price, quantity_available, product_id);
+		super(name, price, quantityAvailable, productID);
 		this.doorDesign = doorDesign;
 		this.color = color;
 		this.capacity = capacity;

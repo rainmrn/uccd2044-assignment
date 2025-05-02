@@ -8,9 +8,9 @@ public class TV extends Product {
 	private int displaySize;
 
 	// parameterized constructor
-	public TV(String name, double price, int quantity_available, String product_id, String screenType,
+	public TV(String name, double price, int quantityAvailable, String productID, String screenType,
 			String resolution, int displaySize) {
-		super(name, price, quantity_available, product_id);
+		super(name, price, quantityAvailable, productID);
 		this.screenType = screenType;
 		this.resolution = resolution;
 		this.displaySize = displaySize;

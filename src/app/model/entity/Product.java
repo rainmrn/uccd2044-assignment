@@ -4,8 +4,8 @@ public abstract class Product {
 	// data fields
 	private String name;
 	private double price;
-	private int quantity_available;
-	private String product_id;
+	private int quantityAvailable;
+	private String productID;
 	private boolean status;
 
 	// default constructor
@@ -14,12 +14,12 @@ public abstract class Product {
 	}
 
 	// parameterized constructor
-	public Product(String name, double price, int quantity_available, String product_id) {
+	public Product(String name, double price, int quantityAvailable, String productID) {
 		this(); // call default constructor to set status
 		this.name = name;
 		this.price = price;
-		this.quantity_available = quantity_available;
-		this.product_id = product_id;
+		this.quantityAvailable = quantityAvailable;
+		this.productID = productID;
 	}
 
 	// Getter & setter
@@ -40,19 +40,19 @@ public abstract class Product {
 	}
 
 	public int getQuantity() {
-		return quantity_available;
+		return quantityAvailable;
 	}
 
-	public void setQuantity(int quantity_available) {
-		this.quantity_available = quantity_available;
+	public void setQuantity(int quantityAvailable) {
+		this.quantityAvailable = quantityAvailable;
 	}
 
 	public String getProductId() {
-		return product_id;
+		return productID;
 	}
 
-	public void setProductId(String product_id) {
-		this.product_id = product_id;
+	public void setProductId(String productID) {
+		this.productID = productID;
 	}
 
 	public boolean getStatus() {
@@ -68,17 +68,17 @@ public abstract class Product {
 
 	// instance method
 	public double totalInventoryValue() {
-		return price * quantity_available;
+		return price * quantityAvailable;
 	}
 
 	public void addQuantity(int quantity) {
 		if (status)
-			quantity_available += quantity;
+			quantityAvailable += quantity;
 	}
 
 	public void deductQuantity(int quantity) {
-		if (status == true && quantity <= quantity_available)
-			quantity_available -= quantity;
+		if (status == true && quantity <= quantityAvailable)
+			quantityAvailable -= quantity;
 	}
 
 	public String getType() {
@@ -93,9 +93,9 @@ public abstract class Product {
 
 	@Override
 	public String toString() {
-		return "Item number         : " + product_id +
+		return "Item number         : " + productID +
 				"\nProduct name        : " + name +
-				"\nQuantity available  : " + quantity_available +
+				"\nQuantity available  : " + quantityAvailable +
 				"\nPrice (RM)          : " + price +
 				"\nInventory Value (RM): " + totalInventoryValue() +
 				"\nProduct status      : " + (getStatus() ? "Active" : "Discontinue");
