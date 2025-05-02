@@ -31,7 +31,7 @@ public class HomePageController {
 
         currentTime.setText(formattedTimeString);
 
-        numOfProducts.setText(Integer.toString(ProductRepo.getNumOfProduct()));
+        numOfProducts.setText(Integer.toString(ProductRepo.getNumOfProduct()) + "/" + Integer.toString(ProductRepo.getMaxProduct()));
         numOfActiveProducts.setText(Integer.toString(ProductRepo.getNumOfActiveProduct()));
 
         totalStockQuantity.setText(Integer.toString(ProductRepo.getTotalStockQuantity()));

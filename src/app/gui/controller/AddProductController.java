@@ -1,9 +1,6 @@
 package app.gui.controller;
 
-import app.model.entity.HairDryer;
-import app.model.entity.Product;
-import app.model.entity.Refrigerator;
-import app.model.entity.TV;
+import app.model.entity.*;
 import app.model.repo.ProductRepo;
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
@@ -18,7 +15,7 @@ public class AddProductController {
     private ComboBox<String> typeComboBox;
 
     @FXML
-    private Label extraLabel1, extraLabel2, extraLabel3, successMessage;
+    private Label extraLabel1, extraLabel2, extraLabel3, message;
 
     @FXML
     private TextField itemNumberTextField, nameTextField, quantityTextField, priceTextField, extraTextField1, extraTextField2, extraTextField3;
@@ -48,10 +45,17 @@ public class AddProductController {
             newProduct = new HairDryer(name, price, quantity, itemNumber, extra1, extra2, extra3);
         }
 
-        ProductRepo.addProduct(newProduct);
-        successMessage.setVisible(true);
+        if (ProductRepo.productList.size() < ProductRepo.getMaxProduct()) {
+            message.setText("Product added successfully");
+            message.setStyle("-fx-text-fill: green;");
+            ProductRepo.addProduct(newProduct);
+        } else {
+            message.setText("Max product reached");
+            message.setStyle("-fx-text-fill: red;");
+        }
+        message.setVisible(true);
         PauseTransition pause = new PauseTransition(Duration.seconds(2));
-        pause.setOnFinished(n -> successMessage.setVisible(false));
+        pause.setOnFinished(n -> message.setVisible(false));
         pause.play();
         clearFields();
     }

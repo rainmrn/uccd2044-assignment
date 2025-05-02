@@ -34,7 +34,7 @@
       <Label text="Type" />
       <Label text="Item Number" GridPane.rowIndex="1" />
       <Label text="Name" GridPane.rowIndex="2" />
-      <TextField fx:id="productIdTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <TextField fx:id="itemNumberTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="1" />
       <TextField fx:id="nameTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="2" />
       <Label text="Quantity" GridPane.rowIndex="3" />
       <Label text="Price" GridPane.rowIndex="4" />
@@ -51,7 +51,7 @@
       <HBox alignment="CENTER" GridPane.columnSpan="2147483647" GridPane.rowIndex="9">
          <children>
             <Region maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-            <Label fx:id="successMessage" alignment="TOP_LEFT" text="Product added successfully!" textAlignment="RIGHT" textFill="#059600" visible="false">
+            <Label fx:id="message" alignment="TOP_LEFT" text="Product added successfully!" textAlignment="RIGHT" textFill="#059600" visible="false">
                <padding>
                   <Insets right="10.0" />
                </padding>

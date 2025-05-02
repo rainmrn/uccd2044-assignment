@@ -21,7 +21,7 @@ public class SignUpController {
     public void onSubmitButtonClick() {
         UserInfoRepo.user.setName(nameTextField.getText());
         UserInfoRepo.generateUserId();
-        ProductRepo.setMaxProduct((int) maxNumOfProductSlider.getValue());
+        ProductRepo.setMaxProduct((int) Math.round(maxNumOfProductSlider.getValue()));
         // ConfigRepository.updateConfig();
 
         UILoader.loadSidebar();
