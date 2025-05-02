@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
 import app.model.repo.*;
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 

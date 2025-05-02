@@ -48,7 +48,7 @@ public class AddProductController {
         ProductRepo.addProduct(newProduct);
         successMessage.setVisible(true);
         PauseTransition pause = new PauseTransition(Duration.seconds(2));
-        pause.setOnFinished(event -> successMessage.setVisible(false));
+        pause.setOnFinished(_ -> successMessage.setVisible(false));
         pause.play();
         clearFields();
     }
@@ -66,7 +66,7 @@ public class AddProductController {
     @FXML
     public void initialize() {
         typeComboBox.setItems(FXCollections.observableArrayList("Refrigerator", "TV"));
-        typeComboBox.setOnAction(event -> {
+        typeComboBox.setOnAction(_ -> {
             type = typeComboBox.getValue();
 
             if (type == "Refrigerator") {

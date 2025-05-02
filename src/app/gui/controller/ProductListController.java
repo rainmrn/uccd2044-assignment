@@ -57,7 +57,7 @@ public class ProductListController {
         }
 
         // set cell name of product in the list view
-        productListView.setCellFactory(x -> new ListCell<Product>() {
+        productListView.setCellFactory(_ -> new ListCell<Product>() {
             @Override
             protected void updateItem(Product product, boolean empty) {
                 super.updateItem(product, empty);
@@ -147,7 +147,7 @@ public class ProductListController {
                 actionHBox.getChildren().clear();
             case 4: // Add stock
                 actionLabel.setText("Amount of stock to add:");
-                actionButton.setOnAction(e -> {
+                actionButton.setOnAction(_ -> {
                     if (selectedProduct != null) {
                         int amountToAdd = Integer.parseInt(actionInputField.getText());
                         selectedProduct.addQuantity(amountToAdd);
@@ -158,7 +158,7 @@ public class ProductListController {
                 break;
             case 5:
                 actionLabel.setText("Amount of stock to deduct:");
-                actionButton.setOnAction(e -> {
+                actionButton.setOnAction(_ -> {
                     if (selectedProduct != null) {
                         int amountToDeduct = Integer.parseInt(actionInputField.getText());
                         selectedProduct.deductQuantity(amountToDeduct);
@@ -171,7 +171,7 @@ public class ProductListController {
                 if (selectedProduct != null) {
                     actionLabel.setText(selectedProduct.getStatus() ? "Discontinue this product?" : "Reactivate this product?");
                     actionHBox.getChildren().remove(actionInputField);
-                    actionButton.setOnAction(e -> {
+                    actionButton.setOnAction(_ -> {
                         selectedProduct.setStatus(selectedProduct.getStatus() ? false : true);
                         actionInputField.clear();
                         clearSelection();

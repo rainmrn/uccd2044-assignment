@@ -2,7 +2,6 @@ package app.cli;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 
 import app.gui.StockManagementGUI;
 import app.model.entity.*;
@@ -20,7 +19,7 @@ public class StockManagement {
 		System.out.println("\n1 - Command Line Interface\n2 - Graphics User Interface\n");
 		int selection;
 		do {
-			selection = ConsoleInputHandler.readInt("Choose 1 or 2 (0 - Exit): ");
+			selection = ScannerUtils.readInt("Choose 1 or 2 (0 - Exit): ");
 		} while (selection < 0 || selection > 2);
 
 		if (selection == 2) {
@@ -42,6 +41,16 @@ public class StockManagement {
 
 		ConsoleUtils.clearConsole();
 		System.out.println("Welcome " + UserInfoRepo.user.getName() + "!");
+
+		int addProductOrNot;
+		do {
+		addProductOrNot = ScannerUtils.readInt("Do you want to add any products? (0 - No, exit / 1 - Yes!): ");
+		} while (addProductOrNot < 0 || addProductOrNot > 1);
+
+		if (addProductOrNot == 0) {
+			System.out.println("We are deeply saddened to see you go :(");
+			System.exit(0);
+		}
 
 		int maxProducts = getMaxProducts();
 
@@ -241,25 +250,28 @@ public class StockManagement {
 	public static void addProduct() {
 		int type;
 
+		System.out.println("\n1 - Refrigerator\n2 - TV\n3 - Hair Dryer");
 		do {
-			type = ScannerUtils.readInt("\nEnter product type you want to store (1 - Refrigerator, 2 - TV): ");
-			if (type < 1 || type > 2) {
-				System.out.println("Only number 1 or 2 allowed!");
+			type = ScannerUtils.readInt("Enter product type (0 - cancel): ");
+			if (type < 0 || type > 3) {
+				System.out.println("Only number 0 - 3 allowed!");
 			}
-		} while (type < 1 || type > 2);
+		} while (type < 0 || type > 3);
 
-		// Add Refrigerator
+		if (type == 0) {
+			return;
+		}
 		if (type == 1) {
 			addRefrigerator();
 		}
-
-		// Add TV
 		if (type == 2) {
 			addTV();
 		}
+		if (type == 3) {
+			addHairDryer();
+		}
 	}
 
-	// Add a Refrigerator
 	public static void addRefrigerator() {
 		
 		String name = ScannerUtils.readLine("Enter product name: ");
@@ -274,7 +286,6 @@ public class StockManagement {
 		System.out.print("New Refrigerator added.\n");
 	}
 
-	// Add a TV
 	public static void addTV() {
 		
 		String name = ScannerUtils.readLine("Enter product name: ");
@@ -287,5 +298,19 @@ public class StockManagement {
 
 		ProductRepo.productList.add(new TV(name, price, qty, itemNumber, screen, res, size));
 		System.out.print("New TV added.\n");
+	}
+
+	public static void addHairDryer() {
+		
+		String name = ScannerUtils.readLine("Enter product name: ");
+		String nozzleType = ScannerUtils.readLine("Enter nozzle type: ");
+		String color = ScannerUtils.readLine("Enter color: ");
+		int power = ScannerUtils.readInt("Enter power (watts): ");
+		int qty = ScannerUtils.readInt("Enter quantity available: ");
+		double price = ScannerUtils.readDouble("Enter price: ");
+		String itemNumber = ScannerUtils.readLine("Enter item number: ");
+
+		ProductRepo.productList.add(new HairDryer(name, price, qty, itemNumber, nozzleType, color, power));
+		System.out.print("New Hair Dryer added.\n");
 	}
 }

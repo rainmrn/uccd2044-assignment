@@ -45,7 +45,7 @@ public class UILoader {
     public static void loadHomePageView() {
         try {
             FXMLLoader loader = new FXMLLoader(UILoader.class.getResource("/app/gui/view/Home.fxml"));
-            loader.setControllerFactory(p -> HomePageController.getController());
+            loader.setControllerFactory(_ -> HomePageController.getController());
             Parent home = loader.load();
 
             mainSection.getChildren().clear();
@@ -60,7 +60,7 @@ public class UILoader {
     public static void loadProductListView(boolean onlyActiveProducts) {
         try {
             FXMLLoader loader = new FXMLLoader(UILoader.class.getResource("/app/gui/view/ProductList.fxml"));
-            loader.setControllerFactory(p -> ProductListController.getController());
+            loader.setControllerFactory(_ -> ProductListController.getController());
             Parent productListView = loader.load();
 
             mainSection.getChildren().clear();
