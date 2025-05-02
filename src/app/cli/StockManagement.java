@@ -2,7 +2,6 @@ package app.cli;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 
 import app.gui.StockManagementGUI;
 import app.model.entity.*;
