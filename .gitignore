@@ -62,6 +62,10 @@ local.properties
 # vscode configurations
 .vscode/
 
-# lib
+# other
 lib/
 .classpath
+out/
+runtime/
+jar/
+
